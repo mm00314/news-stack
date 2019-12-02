@@ -161,4 +161,39 @@ module.exports = function(app, conn, upload) {
   });
 
   return router;
+
+
+/*댓글*/
+
+router.post('/comment', upload.single('upload'), (req, res) => {
+  var comment = req.body.comment;
+
+  var articleId = req.body.articleId;
+
+  var sql = 'INSERT INTO article ('title', 'category', 'desc', 'author', 'upload', 'inserted') VALUES(?, ?, ?, ?, ?, now())';
+  conn.query(sql, [title, category, desc, author, upload], function(err, result, fields){
+    if(err){
+      console.log(err);
+      res.status(500).send('Internet Server Error:'+err);
+    } else {
+      res.redirect('/news/' + result.insertId)
+    }
+  });
+});
+
+return rouetr;
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+

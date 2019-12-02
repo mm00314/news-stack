@@ -71,3 +71,56 @@ app.use('/admin', account);
 app.listen(port, () => console.log(
     `Server is running... http://localhost:${port}`
 ))
+
+
+
+/*댓글달기 창*/
+/*router.post('/comment', (req, res) => {
+  var comment = req.body.comment;
+
+  var article_Id = req.body.article_Id;
+
+  var sql = 'INSERT INTO comment ('comment', 'article_Id', inserted') VALEUS(?, ?, now());
+
+  conn.query(sql, [comment, articleId], function(err, result, fields){
+    if(err) {
+      console.log(err);
+      res.status(500).send('Internal Server Error: '+err);
+    } else {
+      res.redirect('/news/' + articleId);
+    
+    }
+    });
+}); router.get*/
+
+function fn_replyReplySave(){
+  if ( $.trim($("#rewriter3").val()) == "") {
+      alert("작성자를 입력해주세요.");
+      $("#rewriter3").focus();
+      return;
+  }
+  if ($.trim($("#rememo3").val()) == "") {
+      alert("글 내용을 입력해주세요.");
+      $("#rememo3").focus();
+      return;
+  }
+ 
+  var formData = $("#form3").serialize();
+  $.ajax({
+      url: "board7ReplySaveAjax4Reply",
+      type:"post",
+      data : formData,
+      success: function(result){
+          if (result!=="") {
+              var parent = $("#reparent3").val();
+              $("#replyItem"+parent).after(result);
+              $("#replyDialog").hide();
+              alert("저장되었습니다.");
+          } else{
+              alert("서버에 오류가 있어서 저장되지 않았습니다.");
+          }
+      }
+  })       
+}
+
+
